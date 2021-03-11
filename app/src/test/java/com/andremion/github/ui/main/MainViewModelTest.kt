@@ -48,4 +48,20 @@ class MainViewModelTest : UnitTest() {
         verify(observer).onChanged(MainViewState.Error(error))
         verifyNoMoreInteractions(observer)
     }
+
+    @Test
+    fun `should cover mapper error`() = runBlockingTest {
+        val domainRepos = listOf(Repo("name", "description", "owner"))
+        whenever(getUserRepos.invoke("andremion")).thenReturn(domainRepos)
+        val error = RuntimeException()
+        whenever(mapper.map(domainRepos)).thenThrow(error)
+        val observer: Observer<MainViewState> = mock()
+        sut.state.observeForever(observer)
+
+        sut.init()
+
+        verify(observer).onChanged(MainViewState.Loading)
+        verify(observer).onChanged(MainViewState.Error(error))
+        verifyNoMoreInteractions(observer)
+    }
 }
