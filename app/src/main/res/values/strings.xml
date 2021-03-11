@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GitHub</string>
+    <string name="generic_error">Oops! Something went wrong.\nPlease try again later.</string>
 </resources>

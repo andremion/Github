@@ -48,7 +48,7 @@ class MainScreen(
 
     private fun showError(error: Exception) {
         val text = if (error.message.isNullOrBlank()) {
-            view.context.getString(R.string.app_name)
+            view.context.getString(R.string.generic_error)
         } else {
             error.message!!
         }
