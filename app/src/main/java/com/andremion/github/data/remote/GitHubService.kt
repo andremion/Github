@@ -1,6 +1,6 @@
-package com.andremion.github.data.api
+package com.andremion.github.data.remote
 
-import com.andremion.github.data.api.entity.RepoDTO
+import com.andremion.github.data.remote.dto.RepoDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
 

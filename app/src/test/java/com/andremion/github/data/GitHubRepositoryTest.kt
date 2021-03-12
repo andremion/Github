@@ -1,8 +1,8 @@
 package com.andremion.github.data
 
-import com.andremion.github.data.api.GitHubApi
-import com.andremion.github.data.api.entity.OwnerDTO
-import com.andremion.github.data.api.entity.RepoDTO
+import com.andremion.github.data.remote.GitHubRemoteDataSource
+import com.andremion.github.data.remote.dto.OwnerDTO
+import com.andremion.github.data.remote.dto.RepoDTO
 import com.andremion.github.domain.model.Repo
 import com.andremion.github.util.UnitTest
 import com.nhaarman.mockitokotlin2.mock
@@ -13,18 +13,18 @@ import org.junit.Test
 
 class GitHubRepositoryTest : UnitTest() {
 
-    private val gitHubApi: GitHubApi = mock()
-    private val mapper: GitHubRepositoryMapper = mock()
+    private val mockRemoteDataSource: GitHubRemoteDataSource = mock()
+    private val mockMapper: GitHubRepositoryMapper = mock()
 
-    private val sut: GitHubRepository = GitHubRepository(gitHubApi, mapper)
+    private val sut: GitHubRepository = GitHubRepository(mockRemoteDataSource, mockMapper)
 
     @Test
     fun `should get user repos`() = runBlockingTest {
         val user = "andremion"
         val repos = listOf(RepoDTO("name", "description", OwnerDTO("login")))
-        whenever(gitHubApi.repos(user)).thenReturn(repos)
+        whenever(mockRemoteDataSource.repos(user)).thenReturn(repos)
         val expected = listOf(Repo("name", "description", "owner"))
-        whenever(mapper.map(repos)).thenReturn(expected)
+        whenever(mockMapper.map(repos)).thenReturn(expected)
 
         val actual = sut.getUserRepos(user)
 
@@ -32,10 +32,10 @@ class GitHubRepositoryTest : UnitTest() {
     }
 
     @Test(expected = RuntimeException::class)
-    fun `should throw when get exception from api`() = runBlockingTest {
+    fun `should throw when get exception from remote data source`() = runBlockingTest {
         val user = "andremion"
         val error = RuntimeException()
-        whenever(gitHubApi.repos(user)).thenThrow(error)
+        whenever(mockRemoteDataSource.repos(user)).thenThrow(error)
 
         sut.getUserRepos(user)
     }
@@ -44,9 +44,9 @@ class GitHubRepositoryTest : UnitTest() {
     fun `should throw when get exception from mapper`() = runBlockingTest {
         val user = "andremion"
         val repos = listOf(RepoDTO("name", "description", OwnerDTO("login")))
-        whenever(gitHubApi.repos(user)).thenReturn(repos)
+        whenever(mockRemoteDataSource.repos(user)).thenReturn(repos)
         val error = RuntimeException()
-        whenever(mapper.map(repos)).thenThrow(error)
+        whenever(mockMapper.map(repos)).thenThrow(error)
 
         sut.getUserRepos(user)
     }

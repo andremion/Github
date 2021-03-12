@@ -1,14 +1,14 @@
 package com.andremion.github.data
 
-import com.andremion.github.data.api.GitHubApi
+import com.andremion.github.data.remote.GitHubRemoteDataSource
 import com.andremion.github.domain.model.Repo
 
 class GitHubRepository(
-    private val gitHubApi: GitHubApi,
+    private val remoteDataSource: GitHubRemoteDataSource,
     private val mapper: GitHubRepositoryMapper
 ) {
 
     suspend fun getUserRepos(user: String): List<Repo> =
-        gitHubApi.repos(user)
+        remoteDataSource.repos(user)
             .let(mapper::map)
 }

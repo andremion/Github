@@ -1,7 +1,7 @@
 package com.andremion.github.data
 
-import com.andremion.github.data.api.entity.OwnerDTO
-import com.andremion.github.data.api.entity.RepoDTO
+import com.andremion.github.data.remote.dto.OwnerDTO
+import com.andremion.github.data.remote.dto.RepoDTO
 import com.andremion.github.domain.model.Repo
 
 class GitHubRepositoryMapper {

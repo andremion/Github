@@ -1,4 +1,4 @@
-package com.andremion.github.data.api.entity
+package com.andremion.github.data.remote.dto
 
 import kotlinx.serialization.Serializable
 

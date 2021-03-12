@@ -1,8 +1,8 @@
-package com.andremion.github.data.api
+package com.andremion.github.data.remote
 
-import com.andremion.github.data.api.entity.RepoDTO
+import com.andremion.github.data.remote.dto.RepoDTO
 
-class GitHubApi(
+class GitHubRemoteDataSource(
     private val gitHubService: GitHubService
 ) {
 

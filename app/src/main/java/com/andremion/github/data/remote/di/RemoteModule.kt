@@ -1,7 +1,7 @@
-package com.andremion.github.data.api.di
+package com.andremion.github.data.remote.di
 
-import com.andremion.github.data.api.GitHubApi
-import com.andremion.github.data.api.GitHubService
+import com.andremion.github.data.remote.GitHubRemoteDataSource
+import com.andremion.github.data.remote.GitHubService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 
 private const val BASE_URL = "https://api.github.com/"
 
-object ApiModule {
+object RemoteModule {
 
     fun provideService(): GitHubService {
 
@@ -24,5 +24,5 @@ object ApiModule {
         return retrofit.create(GitHubService::class.java)
     }
 
-    fun provideApi(gitHubService: GitHubService): GitHubApi = GitHubApi(gitHubService)
+    fun provideDataSource(gitHubService: GitHubService): GitHubRemoteDataSource = GitHubRemoteDataSource(gitHubService)
 }

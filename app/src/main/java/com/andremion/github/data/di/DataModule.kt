@@ -2,15 +2,15 @@ package com.andremion.github.data.di
 
 import com.andremion.github.data.GitHubRepository
 import com.andremion.github.data.GitHubRepositoryMapper
-import com.andremion.github.data.api.GitHubApi
+import com.andremion.github.data.remote.GitHubRemoteDataSource
 
 object DataModule {
 
     fun provideMapper(): GitHubRepositoryMapper = GitHubRepositoryMapper()
 
     fun provideRepository(
-        gitHubApi: GitHubApi,
+        remoteDataSource: GitHubRemoteDataSource,
         mapper: GitHubRepositoryMapper
     ): GitHubRepository =
-        GitHubRepository(gitHubApi, mapper)
+        GitHubRepository(remoteDataSource, mapper)
 }

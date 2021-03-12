@@ -14,17 +14,17 @@ import org.junit.Test
 
 class MainViewModelTest : UnitTest() {
 
-    private val getUserRepos: GetUserReposUseCase = mock()
-    private val mapper: MainViewModelMapper = mock()
+    private val mockGetUserRepos: GetUserReposUseCase = mock()
+    private val mockMapper: MainViewModelMapper = mock()
 
-    private val sut: MainViewModel = MainViewModel(getUserRepos, mapper)
+    private val sut: MainViewModel = MainViewModel(mockGetUserRepos, mockMapper)
 
     @Test
     fun `should fetch repos on init`() = runBlockingTest {
         val domainRepos = listOf(Repo("name", "description", "owner"))
-        whenever(getUserRepos.invoke("andremion")).thenReturn(domainRepos)
+        whenever(mockGetUserRepos.invoke("andremion")).thenReturn(domainRepos)
         val modelRepos = listOf(RepoModel("name", "description", "owner"))
-        whenever(mapper.map(domainRepos)).thenReturn(modelRepos)
+        whenever(mockMapper.map(domainRepos)).thenReturn(modelRepos)
         val observer: Observer<MainViewState> = mock()
         sut.state.observeForever(observer)
 
@@ -38,7 +38,7 @@ class MainViewModelTest : UnitTest() {
     @Test
     fun `should cover use case error`() = runBlockingTest {
         val error = RuntimeException()
-        whenever(getUserRepos.invoke("andremion")).thenThrow(error)
+        whenever(mockGetUserRepos.invoke("andremion")).thenThrow(error)
         val observer: Observer<MainViewState> = mock()
         sut.state.observeForever(observer)
 
@@ -52,9 +52,9 @@ class MainViewModelTest : UnitTest() {
     @Test
     fun `should cover mapper error`() = runBlockingTest {
         val domainRepos = listOf(Repo("name", "description", "owner"))
-        whenever(getUserRepos.invoke("andremion")).thenReturn(domainRepos)
+        whenever(mockGetUserRepos.invoke("andremion")).thenReturn(domainRepos)
         val error = RuntimeException()
-        whenever(mapper.map(domainRepos)).thenThrow(error)
+        whenever(mockMapper.map(domainRepos)).thenThrow(error)
         val observer: Observer<MainViewState> = mock()
         sut.state.observeForever(observer)
 
