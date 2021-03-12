@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.andremion.github.R
-import com.andremion.github.di.DI
+import com.andremion.github.ui.main.di.MainInjector
 
 class MainFragment : Fragment() {
 
@@ -24,7 +24,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DI.inject(this)
+        MainInjector.inject(this)
         viewModel.state.observe(this, screen::render)
     }
 

@@ -1,7 +1,7 @@
 package com.andremion.github
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.andremion.github.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {

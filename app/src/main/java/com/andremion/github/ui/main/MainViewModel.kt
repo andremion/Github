@@ -20,11 +20,11 @@ class MainViewModel(
 
     fun init() {
         viewModelScope.launch {
-            try {
+            _state.value = try {
                 val repos = getUserRepos(USER).let(mapper::map)
-                _state.value = MainViewState.Content(repos)
+                MainViewState.Content(repos)
             } catch (e: Exception) {
-                _state.value = MainViewState.Error(e)
+                MainViewState.Error(e)
             }
         }
     }
