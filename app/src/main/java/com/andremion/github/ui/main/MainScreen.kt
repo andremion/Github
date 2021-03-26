@@ -46,7 +46,7 @@ class MainScreen(
         repoListView.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
     }
 
-    private fun showError(error: Exception) {
+    private fun showError(error: Throwable) {
         val text = if (error.message.isNullOrBlank()) {
             view.context.getString(R.string.generic_error)
         } else {
