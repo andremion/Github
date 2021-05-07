@@ -7,7 +7,7 @@ object MainInjector {
 
     fun inject(fragment: MainFragment) {
         val appContainer = fragment.requireContext().appContainer
-        fragment.viewModel = MainModule.provideViewModel(appContainer, fragment)
         fragment.screen = MainModule.provideScreen(fragment)
+        fragment.viewModelFactory = MainModule.provideViewModelFactory(appContainer)
     }
 }
