@@ -1,11 +1,11 @@
 package com.andremion.github.di
 
-import com.andremion.github.data.GitHubRepository
-import com.andremion.github.data.GitHubRepositoryMapper
 import com.andremion.github.data.di.DataModule
-import com.andremion.github.data.remote.GitHubRemoteDataSource
 import com.andremion.github.data.remote.GitHubService
 import com.andremion.github.data.remote.di.RemoteModule
+import com.andremion.github.domain.mapper.GitHubRepositoryMapper
+import com.andremion.github.domain.remote.GitHubRemoteDataSource
+import com.andremion.github.domain.repository.GitHubRepository
 
 class AppContainer {
 
