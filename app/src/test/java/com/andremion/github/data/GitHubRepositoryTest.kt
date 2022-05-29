@@ -50,6 +50,5 @@ class GitHubRepositoryTest : UnitTest() {
         `when`(mockRemoteDataSource.repos(user)).thenReturn(flowOf(repos))
         val error = RuntimeException()
         `when`(mockMapper.map(repos)).thenThrow(error)
-        sut.getUserRepos(user).single()
     }
 }
