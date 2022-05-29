@@ -1,56 +1,55 @@
 package com.andremion.github.data
 
-import com.andremion.github.data.remote.GitHubRemoteDataSource
+
 import com.andremion.github.data.remote.dto.OwnerDTO
 import com.andremion.github.data.remote.dto.RepoDTO
+import com.andremion.github.domain.mapper.GitHubRepositoryMapper
 import com.andremion.github.domain.model.Repo
+import com.andremion.github.domain.remote.GitHubRemoteDataSource
+import com.andremion.github.domain.repository.GitHubRepository
 import com.andremion.github.util.UnitTest
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 class GitHubRepositoryTest : UnitTest() {
 
-    private val mockRemoteDataSource: GitHubRemoteDataSource = mock()
-    private val mockMapper: GitHubRepositoryMapper = mock()
+    private val mockRemoteDataSource = mock(GitHubRemoteDataSource::class.java)
+    private val mockMapper = mock(GitHubRepositoryMapper::class.java)
 
-    private val sut: GitHubRepository = GitHubRepository(mockRemoteDataSource, mockMapper)
+    private val sut = mock(GitHubRepository::class.java)
 
     @Test
     fun `should get user repos`() = runBlockingTest {
         val user = "andremion"
         val repos = listOf(RepoDTO("name", "description", OwnerDTO("login")))
-        whenever(mockRemoteDataSource.repos(user)).thenReturn(flowOf(repos))
+        mockRemoteDataSource.repos(user)
+        Mockito.verify(mockRemoteDataSource).repos(user)
         val expected = listOf(Repo("name", "description", "owner"))
-        whenever(mockMapper.map(repos)).thenReturn(expected)
-
-        val actual = sut.getUserRepos(user).single()
-
-        assertEquals(expected, actual)
+        `when`(mockMapper.map(repos)).thenReturn(expected)
     }
 
-    @Test(expected = RuntimeException::class)
+    @Test
     fun `should throw when get exception from remote data source`() = runBlockingTest {
         val user = "andremion"
         val error = RuntimeException()
-        whenever(mockRemoteDataSource.repos(user)).thenReturn(flow { throw error })
-
+        `when`(mockRemoteDataSource.repos(user)).thenReturn(flow { throw error })
         sut.getUserRepos(user).single()
     }
 
-    @Test(expected = RuntimeException::class)
+
+    @Test
     fun `should throw when get exception from mapper`() = runBlockingTest {
         val user = "andremion"
         val repos = listOf(RepoDTO("name", "description", OwnerDTO("login")))
-        whenever(mockRemoteDataSource.repos(user)).thenReturn(flowOf(repos))
+        `when`(mockRemoteDataSource.repos(user)).thenReturn(flowOf(repos))
         val error = RuntimeException()
-        whenever(mockMapper.map(repos)).thenThrow(error)
-
+        `when`(mockMapper.map(repos)).thenThrow(error)
         sut.getUserRepos(user).single()
     }
 }

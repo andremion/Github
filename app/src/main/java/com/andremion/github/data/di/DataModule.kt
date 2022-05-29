@@ -1,16 +1,18 @@
 package com.andremion.github.data.di
 
-import com.andremion.github.data.GitHubRepository
-import com.andremion.github.data.GitHubRepositoryMapper
-import com.andremion.github.data.remote.GitHubRemoteDataSource
+import com.andremion.github.data.GitHubRepositoryImp
+import com.andremion.github.data.GitHubRepositoryMapperImp
+import com.andremion.github.domain.mapper.GitHubRepositoryMapper
+import com.andremion.github.domain.remote.GitHubRemoteDataSource
+import com.andremion.github.domain.repository.GitHubRepository
 
 object DataModule {
 
-    fun provideMapper(): GitHubRepositoryMapper = GitHubRepositoryMapper()
+    fun provideMapper(): GitHubRepositoryMapper = GitHubRepositoryMapperImp()
 
     fun provideRepository(
         remoteDataSource: GitHubRemoteDataSource,
         mapper: GitHubRepositoryMapper
     ): GitHubRepository =
-        GitHubRepository(remoteDataSource, mapper)
+        GitHubRepositoryImp(remoteDataSource, mapper)
 }
