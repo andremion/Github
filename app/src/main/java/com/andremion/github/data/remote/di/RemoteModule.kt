@@ -2,6 +2,7 @@ package com.andremion.github.data.remote.di
 
 import com.andremion.github.data.remote.GitHubRemoteDataSourceImp
 import com.andremion.github.data.remote.GitHubService
+import com.andremion.github.domain.remote.GitHubRemoteDataSource
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
@@ -24,5 +25,5 @@ object RemoteModule {
         return retrofit.create(GitHubService::class.java)
     }
 
-    fun provideDataSource(gitHubService: GitHubService): GitHubRemoteDataSourceImp = GitHubRemoteDataSourceImp(gitHubService)
+    fun provideDataSource(gitHubService: GitHubService): GitHubRemoteDataSource = GitHubRemoteDataSourceImp(gitHubService)
 }
